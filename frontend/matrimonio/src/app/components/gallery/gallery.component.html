@@ -1,0 +1,40 @@
+<div class="gallery-container">
+  <h2>Galleria Foto Matrimonio</h2>
+  
+  <div class="search-section">
+    <div class="form-group">
+      <label for="codiceInput">Codice Coppia:</label>
+      <input 
+        id="codiceInput"
+        type="text" 
+        [(ngModel)]="codiceCoppia" 
+        placeholder="Inserisci il codice della coppia"
+        class="form-control"
+        (keyup.enter)="caricaGallery()"
+      />
+    </div>
+
+    <button 
+      (click)="caricaGallery()" 
+      [disabled]="!codiceCoppia || isLoading"
+      class="btn-search"
+    >
+      <span *ngIf="!isLoading">Visualizza Gallery</span>
+      <span *ngIf="isLoading">Caricamento...</span>
+    </button>
+  </div>
+
+  <div class="message" *ngIf="message">
+    {{ message }}
+  </div>
+
+  <div class="photos-grid" *ngIf="fotoUrls.length > 0">
+    <div class="photo-card" *ngFor="let url of fotoUrls">
+      <img [src]="getFullUrl(url)" [alt]="'Foto matrimonio'" class="photo-img" />
+    </div>
+  </div>
+
+  <div class="no-photos" *ngIf="fotoUrls.length === 0 && !message && !isLoading">
+    <p>Inserisci un codice coppia per visualizzare le foto</p>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="upload-container">
+  <h2>Carica Foto Matrimonio</h2>
+  
+  <div class="form-group">
+    <label for="codiceInput">Codice Coppia:</label>
+    <input 
+      id="codiceInput"
+      type="text" 
+      [(ngModel)]="codiceCoppia" 
+      placeholder="Inserisci il codice della coppia"
+      class="form-control"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="fileInput">Seleziona Foto:</label>
+    <input 
+      id="fileInput"
+      type="file" 
+      (change)="onFileSelected($event)" 
+      accept="image/*"
+      class="form-control"
+    />
+    <small class="file-info" *ngIf="selectedFile">
+      File selezionato: {{ selectedFile.name }} ({{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB)
+    </small>
+  </div>
+
+  <button 
+    (click)="onUpload()" 
+    [disabled]="!codiceCoppia || !selectedFile || isLoading"
+    class="btn-upload"
+  >
+    <span *ngIf="!isLoading">Carica Foto</span>
+    <span *ngIf="isLoading">Caricamento...</span>
+  </button>
+
+  <div class="message" *ngIf="message" [class.error]="message.includes('Errore')" [class.success]="message.includes('successo')">
+    {{ message }}
+  </div>
+</div>

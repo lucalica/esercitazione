@@ -32,7 +32,7 @@ public class MatrimonioService {
 
     public void salvaFoto(String codice, MultipartFile file) {
         // 1. Verifichiamo se il matrimonio esiste
-        Coppia coppia = coppiaRepo.findByCodice(Long.parseLong(codice))
+        Coppia coppia = coppiaRepo.findByCodice(codice)
                 .orElseThrow(() -> new RuntimeException("Codice non valido"));
 
         try {
@@ -65,12 +65,12 @@ public class MatrimonioService {
 
     public List<String> getFotoPerMatrimonio(String codice) {
         // 1. Verifichiamo se il matrimonio esiste
-        if (!coppiaRepo.existsByCodice(Long.parseLong(codice))) {
+        if (!coppiaRepo.existsByCodice(codice)) {
             throw new RuntimeException("Matrimonio non trovato con il codice: " + codice);
         }
 
         // 2. Recuperiamo le foto dal database
-        List<Foto> listaFoto = fotoRepo.findByCoppiaCodice(Long.parseLong(codice));
+        List<Foto> listaFoto = fotoRepo.findByCoppiaCodice(codice);
 
         // 3. Trasformiamo la lista di oggetti "Foto" in una lista di URL (Stringhe)
         // Così Angular riceve direttamente i link alle immagini

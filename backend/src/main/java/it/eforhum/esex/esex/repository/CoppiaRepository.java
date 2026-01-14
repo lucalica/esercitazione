@@ -10,7 +10,7 @@ import it.eforhum.esex.esex.entity.Coppia;
 @Repository
 public interface CoppiaRepository extends JpaRepository<Coppia, Long> {
     
-    Optional<Coppia> findByCodice(long codice);
+    Optional<Coppia> findByCodice(String codice);
 
-    boolean existsByCodice(long codice);
+    boolean existsByCodice(String codice);
 }
