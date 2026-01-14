@@ -23,14 +23,22 @@ public class ApiKeyFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String requestApiKey = request.getHeader(API_KEY_HEADER);
+        String path = request.getRequestURI();
+        
+        // Applica il controllo API Key solo per gli endpoint /matrimonio/**
+        if (path.startsWith("/matrimonio/")) {
+            String requestApiKey = request.getHeader(API_KEY_HEADER);
 
-        if (validApiKey.equals(requestApiKey)) {
-            filterChain.doFilter(request, response);
+            if (validApiKey.equals(requestApiKey)) {
+                filterChain.doFilter(request, response);
+            } else {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"API Key non valida o mancante\"}");
+            }
         } else {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"API Key non valida o mancante\"}");
+            // Per tutti gli altri path, lascia passare
+            filterChain.doFilter(request, response);
         }
     }
 }

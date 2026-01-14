@@ -11,6 +11,6 @@ import it.eforhum.esex.esex.entity.Foto;
 public interface FotoRepository extends JpaRepository<Foto, Long> {
 
     List<Foto> findByCoppiaCoppiaId(Long coppiaId);
-    List<Foto> findByCoppiaCodice(Long codice);
+    List<Foto> findByCoppiaCodice(String codice);
     
 }
