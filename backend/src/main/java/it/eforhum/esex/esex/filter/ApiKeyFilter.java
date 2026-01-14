@@ -25,7 +25,6 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
         
-        // Applica il controllo API Key solo per gli endpoint /matrimonio/**
         if (path.startsWith("/matrimonio/")) {
             String requestApiKey = request.getHeader(API_KEY_HEADER);
 
@@ -37,7 +36,6 @@ public class ApiKeyFilter extends OncePerRequestFilter {
                 response.getWriter().write("{\"error\": \"API Key non valida o mancante\"}");
             }
         } else {
-            // Per tutti gli altri path, lascia passare
             filterChain.doFilter(request, response);
         }
     }
